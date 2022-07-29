@@ -1,45 +1,78 @@
-const woman = {
-    species: 'human',
-    name: 'line',
-    gender: 'female',
-    legs: 2,
-    hands: 2,
-    saying: 'bye',
-  };
+// создадим родительский класс World
+class WorldInhabitant {
+  // объявляем метод конструктор (ожидаем на входе значения)
+  constructor(name, species, gender, saying){
+  // инициализация полей
+  this.name = name;
+  this.species = species;
+  this.gender = gender;
+  this.saying = saying;
+  }
   
-const man = {
-    species: 'human',
-    name: 'Joey',
-    gender: 'male',
-    legs: 2,
-    hands: 2,
-    saying: 'hi',
-  };
-const dog = {
-    species: 'dog',
-    name: 'Dik',
-    gender: 'male',
-    legs: 4,
-    hands: 0,
-    saying: 'woof',
-  };
+  // объявление метода toString()
+  // toString() возвращает строку, представляющую объект
+  // обращение к собственному атрибуту через this
+  toString() {
+     return `${this.name}; ${this.species}; ${this.gender}; ${this.saying}; `;
+  }
+}
+
+// создадим два класса наследующие от родительского часть свойств
+class Human extends WorldInhabitant {
+  constructor(name, species, gender, saying, legs, hands) {
+     super(name, species, gender, saying); //наследуем поля от родителя, и добавляем еще два поля
+     this.legs = 2 || legs;
+     this.hands = 2 || hands;
+  } 
   
-const cat = {
-    species: 'cat',
-    name: 'Tom',
-    gender: 'male',
-    legs: 4,
-    hands: 0,
-    saying: 'mau',
-  };
+  toString() {
+  return super.toString() + `${this.legs}; ${this.hands}; `
+  }
+}
+
+class Animal extends WorldInhabitant {
+  // наследуем четыре свойства от родителя и добавляем лапы для животных
+  constructor(name, species, gender, saying, paws) {
+     super(name, species, gender, saying) //наследуем поля от родителя, и добавляем еще два поля
+     this.paws = 4 || paws;
+  }
+
+  toString(){
+    return super.toString() + `${this.paws}; `
+  }
+}
+
+// создаем экземпляр жителя и передаем параметр
+// этот экземпляр с собственным состоянием свойств класса
+const man = new Human(
+'human',
+'Joey',
+'male',
+'Hi'
+);
+
+// создаем новый экземпляр жителя
+const woman = new Human(
+'human',
+'Rey',
+'female',
+'Bye'
+);
+
+// создаем новый экземпляр жителя
+const cat = new Animal(
+'cat',
+'Allen',
+'female',
+'Mau'
+);
   
-  
-  const inhabitants = [dog, cat, woman, man,];
-  
-  const keys = ['species', 'name', 'gender', 'legs', 'hands', 'saying'];
-  
-  const description = inhabitants.map((el) => {
-    return keys.map(key => el[key]);
-  });
-  
-  description.map(el => print(el.join('; ')));
+// создаем новый экземпляр жителя
+const dog = new Animal(
+'dog',
+'Johnny',
+'male',
+'Woof'
+);
+
+[man, woman, cat, dog].map(el => print(el)); 
